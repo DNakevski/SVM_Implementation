@@ -76,6 +76,9 @@
                 plotOptions: {
                     series: {
                         lineWidth: 0,
+                        marker: {
+                            radius: 5
+                        },
                         point: {
                             events: {
                                 'click': function (e) {
@@ -126,8 +129,17 @@
                 $.post("Ajax.aspx?action=clasify", { }, function (data) {
 
                     if (data == "success") {
-
-                       
+                        var series = {
+                            type: 'line',
+                            lineWidth: 1,
+                            marker: {
+                                radius: 0
+                            },
+                            id: 'series',
+                            name: 'JSON Data',
+                            data: [[50,50], [20,20]]
+                        }
+                        chart.addSeries(series)
                     }
                     else
                         alert("Класификацијата не е успешно направена!");
