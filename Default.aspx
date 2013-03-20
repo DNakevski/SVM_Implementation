@@ -127,7 +127,6 @@
             $("#btnClasify").click(function () {
 
                 $.post("Ajax.aspx?action=clasify", { }, function (data) {
-
                     if (data == "success") {
                         var series = {
                             type: 'line',
