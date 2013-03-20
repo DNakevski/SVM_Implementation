@@ -10,10 +10,12 @@ public class Class2
     protected double minX;
 
     public List<Point> points;
+    public List<Point> supportVector;
     
     public Class2() 
     {
         points = new List<Point>();
+        supportVector = new List<Point>();
     }
 
     public double MinX

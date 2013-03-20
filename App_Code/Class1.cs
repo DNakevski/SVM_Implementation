@@ -8,11 +8,14 @@ public class Class1
     public string Name;
     protected double minX;
 
+    public List<Point> supportVector;
+
     public List<Point> points;
 
     public Class1() 
     {
         points = new List<Point>();
+        supportVector = new List<Point>();
     }
 
     public double MinX
