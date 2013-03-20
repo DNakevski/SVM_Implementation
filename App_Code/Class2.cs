@@ -33,4 +33,52 @@ public class Class2
                 this.minX = p.x;
         }
     }
+
+    public List<Point> GetSortedPoints()
+    {
+        Point[] tempList = new Point[this.points.Count];
+        Point tempPoint = new Point();
+        this.points.CopyTo(tempList);
+
+        for ( int pass = 1; pass < tempList.Length; pass++ )
+            for ( int i = 0; i < tempList.Length - 1; i++ )
+                if (tempList[i].X < tempList[i + 1].X)
+                {
+                    tempPoint = tempList[i];
+                    tempList[i] = tempList[i + 1];
+                    tempList[i + 1] = tempPoint;
+                }
+
+        return tempList.ToList();
+    }
+
+    public Point GetFirstPoint()
+    {
+        List<Point> tempList = new List<Point>();
+        tempList = GetSortedPoints();
+
+        return tempList[0];
+    }
+
+    public double ReturnBasicDistanceByX()
+    {
+        double result;
+        List<Point> tempList = new List<Point>();
+        tempList = GetSortedPoints();
+
+        result = tempList[0].X - tempList[1].X;
+
+        return result;
+    }
+
+    public double ReturnBasicDistanceByY()
+    {
+        double result;
+        List<Point> tempList = new List<Point>();
+        tempList = GetSortedPoints();
+
+        result = tempList[0].Y - tempList[2].Y;
+
+        return result;
+    }
 }

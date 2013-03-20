@@ -26,6 +26,52 @@ public partial class Ajax : System.Web.UI.Page
 
     protected void Clasify()
     {
+        Class1 c1 = (Class1)Session["Class1"];
+        Class2 c2 = (Class2)Session["Class2"];
+
+        if (c1.points.Count < 2 || c2.points.Count < 2)
+        {
+            Response.Write("NoPoints");
+            Response.End();
+        }
+
+        double x1 = c1.ReturnBasicDistanceByX();
+        double x2 = c2.ReturnBasicDistanceByX();
+
+        double dx = 0;
+        double dy = 0;
+
+        if (x1 < x2)
+        {
+            dx = x1;
+            dy = c1.ReturnBasicDistanceByY();
+        }
+        else
+        {
+            dx = x2;
+            dy = c2.ReturnBasicDistanceByY();
+        }
+
+
+        Point firstPoint = c1.GetFirstPoint();
+        Point startPoint = new Point(firstPoint.X - dx, firstPoint.Y - dy);
+
+        string series1 = "";
+        string series2 = "";
+
+        for (int i = 0; i < 3; i++)
+        {
+            double nextX = startPoint.X;
+            double nextY = startPoint.Y;
+
+            series1 += "[" + nextX + "," + nextY + "],";
+
+            startPoint = new Point(nextX + dx, nextY + dy);
+
+        }
+
+
+            //List<Point> tempList = c2.GetSortedPoints();
         Response.Write("success");
         Response.End();
     }

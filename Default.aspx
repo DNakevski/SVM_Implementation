@@ -126,7 +126,13 @@
 
             $("#btnClasify").click(function () {
 
-                $.post("Ajax.aspx?action=clasify", { }, function (data) {
+                $.post("Ajax.aspx?action=clasify", {}, function (data) {
+
+                    if (data == "NoPoints") {
+                        alert("Треба да внесете барем по една точка од двете класи!");
+                        return false;
+                    }
+
                     if (data == "success") {
                         var series = {
                             type: 'line',
