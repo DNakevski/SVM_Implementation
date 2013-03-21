@@ -77,7 +77,7 @@ public class Class2
         List<Point> tempList = new List<Point>();
         tempList = GetSortedPoints();
 
-        result = tempList[0].Y - tempList[2].Y;
+        result = tempList[0].Y - tempList[1].Y;
 
         return result;
     }

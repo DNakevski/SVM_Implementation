@@ -9,7 +9,6 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         Class1 c1 = new Class1();
         c1.points.Add(new Point(40, 20));
         c1.MinX = 40;

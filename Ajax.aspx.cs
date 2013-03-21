@@ -43,36 +43,59 @@ public partial class Ajax : System.Web.UI.Page
 
         if (x1 < x2)
         {
-            dx = x1;
             dy = c1.ReturnBasicDistanceByY();
+
+            dx = x1;
+            if (dy < 0)
+            {
+                dx = x1 * (-1);
+                dy = dy * (-1);
+            }
         }
         else
         {
-            dx = x2;
             dy = c2.ReturnBasicDistanceByY();
+            dx = x2;
+            if (dy < 0)
+            {
+                dx = x2 * (-1);
+                dy = dy * (-1);
+            }
         }
 
 
         Point firstPoint = c1.GetFirstPoint();
-        Point startPoint = new Point(firstPoint.X - dx, firstPoint.Y - dy);
+        Point startPoint = new Point(firstPoint.X - (dx), firstPoint.Y - dy);
 
-        string series1 = "";
-        string series2 = "";
+        Point firstPoint2 = c2.GetFirstPoint();
+        Point startPoint2 = new Point(firstPoint2.X - (dx), firstPoint2.Y - dy);
 
-        for (int i = 0; i < 3; i++)
+        string series1 = "[";
+        string series2 = "[";
+
+        Point minYPoint = FindSmallestY(c1.points, c2.points);
+        Point maxYPoint = FindLargestY(c1.points, c2.points);
+
+        series1 += "[" + startPoint.X + ", " + startPoint.Y + "],";
+        series2 += "[" + startPoint2.X + ", " + startPoint2.Y + "],";
+
+
+        while (startPoint.Y <= maxYPoint.Y)
         {
-            double nextX = startPoint.X;
-            double nextY = startPoint.Y;
 
-            series1 += "[" + nextX + "," + nextY + "],";
+            startPoint = new Point(startPoint.X + dx, startPoint.Y + dy);
+            series1 += "[" + startPoint.X + ", " + startPoint.Y + "],";
 
-            startPoint = new Point(nextX + dx, nextY + dy);
-
+            startPoint2 = new Point(startPoint2.X + dx, startPoint2.Y + dy);
+            series2 += "[" + startPoint2.X + ", " + startPoint2.Y + "],";
         }
 
+        series1 = series1.Substring(0, series1.Length - 1);
+        series1 += "]";
+        series2 = series2.Substring(0, series2.Length - 1);
+        series2 += "]";
 
-            //List<Point> tempList = c2.GetSortedPoints();
-        Response.Write("success");
+        Response.Write(series1 + "#" + series2);
         Response.End();
     }
 
@@ -155,5 +178,34 @@ public partial class Ajax : System.Web.UI.Page
 
         Response.Write("success");
         Response.End();
+    }
+
+
+    protected Point FindSmallestY(List<Point> l1, List<Point> l2)
+    {
+        List<Point> unionList = l1.Union(l2).ToList();
+        Point min = unionList[0];
+
+        foreach (Point p in unionList)
+        {
+            if (p.Y < min.Y)
+                min = p;
+        }
+
+        return min;
+    }
+
+    protected Point FindLargestY(List<Point> l1, List<Point> l2)
+    {
+        List<Point> unionList = l1.Union(l2).ToList();
+        Point max = unionList[0];
+
+        foreach (Point p in unionList)
+        {
+            if (p.Y > max.Y)
+                max = p;
+        }
+
+        return max;
     }
 }

@@ -133,21 +133,43 @@
                         return false;
                     }
 
-                    if (data == "success") {
+                    else {
+                        alert(data);
+                        var data2 = new Array();
+                        data2 = data.split("#");
+
+                        data = eval(data2[0]);
                         var series = {
                             type: 'line',
                             lineWidth: 1,
                             marker: {
                                 radius: 0
                             },
-                            id: 'series',
-                            name: 'JSON Data',
-                            data: [[50,50], [20,20]]
+                            id: 'sv_1',
+                            name: 'SV 1',
+                            data: data
                         }
-                        chart.addSeries(series)
+                        chart.addSeries(series);
+
+                        data = eval(data2[1]);
+
+                        chart.redraw(true);
+
+                        var series2 = {
+                            type: 'line',
+                            lineWidth: 1,
+                            marker: {
+                                radius: 0
+                            },
+                            id: 'sv_2',
+                            name: 'SV 2',
+                            data: data
+                        }
+                        chart.addSeries(series2);
+
+                        chart.redraw(true);
                     }
-                    else
-                        alert("Класификацијата не е успешно направена!");
+                    
                 });
 
             });
