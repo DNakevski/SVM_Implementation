@@ -129,24 +129,32 @@
                 $.post("Ajax.aspx?action=clasify", {}, function (data) {
 
                     if (data == "NoPoints") {
-                        alert("Треба да внесете барем по една точка од двете класи!");
+                        alert("Треба да внесете барем по две точки од двете класи!");
                         return false;
                     }
 
                     else {
-                        alert(data);
+
+                        if (chart.series.length == 5) {
+                            chart.get("H1").remove();
+                            chart.get("H2").remove();
+                            chart.get("H").remove();
+                            chart.redraw();
+                        }
+
                         var data2 = new Array();
                         data2 = data.split("#");
 
                         data = eval(data2[0]);
                         var series = {
                             type: 'line',
+                            color: '#058DC7',
                             lineWidth: 1,
                             marker: {
                                 radius: 0
                             },
-                            id: 'sv_1',
-                            name: 'SV 1',
+                            id: 'H1',
+                            name: 'H1',
                             data: data
                         }
                         chart.addSeries(series);
@@ -157,17 +165,33 @@
 
                         var series2 = {
                             type: 'line',
+                            color: '#50B432',
                             lineWidth: 1,
                             marker: {
                                 radius: 0
                             },
-                            id: 'sv_2',
-                            name: 'SV 2',
+                            id: 'H2',
+                            name: 'H2',
                             data: data
                         }
                         chart.addSeries(series2);
 
                         chart.redraw(true);
+
+                        data = eval(data2[2]);
+
+                        var series3 = {
+                            type: 'line',
+                            color: 'black',
+                            lineWidth: 2,
+                            marker: {
+                                radius: 0
+                            },
+                            id: 'H',
+                            name: 'H',
+                            data: data
+                        }
+                        chart.addSeries(series3);
                     }
                     
                 });

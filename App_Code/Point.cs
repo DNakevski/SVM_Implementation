@@ -56,4 +56,15 @@ public class Point
 
         return result;
     }
+
+    public Point ReturnMiddlePoint(Point p1, Point p2)
+    {
+        double _x = ((p1.X) + (p2.X)) / 2;
+        double _y = ((p1.Y) + (p2.Y)) / 2;
+
+        Point middlePoint = new Point(_x, _y);
+
+
+        return middlePoint;
+    }
 }

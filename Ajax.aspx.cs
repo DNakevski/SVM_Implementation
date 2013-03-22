@@ -95,7 +95,22 @@ public partial class Ajax : System.Web.UI.Page
         series2 = series2.Substring(0, series2.Length - 1);
         series2 += "]";
 
-        Response.Write(series1 + "#" + series2);
+
+        Point p = new Point();
+        Point middlePoint = p.ReturnMiddlePoint(startPoint, startPoint2);
+
+        string series3 = "[["+ middlePoint.X +", "+ middlePoint.Y +"],";
+        dx = dx * (-1);
+        while (middlePoint.Y >= minYPoint.Y)
+        {
+            middlePoint = new Point(middlePoint.X + dx, middlePoint.Y - Math.Abs(dy));
+            series3 += "[" + middlePoint.X + ", " + middlePoint.Y + "],";
+        }
+
+        series3 = series3.Substring(0, series3.Length - 1);
+        series3 += "]";
+
+        Response.Write(series1 + "#" + series2 + "#" + series3);
         Response.End();
     }
 
